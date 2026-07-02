@@ -1,18 +1,11 @@
 "use client";
 
-import { X, Luggage } from "lucide-react";
+import { X, Luggage, Sparkles } from "lucide-react";
 import { useTripStore } from "@/lib/store";
 import { CATEGORY_META, formatPrice, cn } from "@/lib/utils";
 import type { TravelCategory } from "@/lib/types";
 
-const ORDER: TravelCategory[] = [
-  "flights",
-  "hotels",
-  "carRentals",
-  "food",
-  "activities",
-  "extras",
-];
+const ORDER: TravelCategory[] = ["flights", "hotels", "carRentals", "food", "activities", "extras"];
 
 export default function TripSummary() {
   const { trip, deselectCategory, getTotal, getSelectedCount } = useTripStore();
@@ -20,86 +13,57 @@ export default function TripSummary() {
   const count = getSelectedCount();
 
   return (
-    <aside
-      className="ticket-perforation sticky top-[130px] overflow-hidden rounded-2xl border border-surface-200 bg-white shadow-card"
-      style={{ "--perf-top": "168px" } as React.CSSProperties}
-    >
-      <div className="ticket-notch-left" />
-      <div className="ticket-notch-right" />
-
-      {/* Stub header */}
-      <div className="bg-surface-950 px-5 py-4 text-white">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-brand-300">
-          {trip.destination ? trip.destination.iataCode ?? trip.destination.countryCode : "No destination"}
-        </p>
-        <h2 className="font-display text-lg font-bold">
-          {trip.destination ? trip.destination.name : "Your trip"}
-        </h2>
-        <p className="mt-0.5 text-xs text-surface-300">
-          {count} of 6 categories selected
-        </p>
+    <aside className="overflow-hidden rounded-[1.8rem] border border-white bg-white shadow-card">
+      <div className="bg-gradient-to-br from-surface-950 via-brand-900 to-purplepop-700 px-5 py-5 text-white">
+        <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-cyanpop-200">Trip Overview</p>
+        <h2 className="mt-1 font-display text-2xl font-black tracking-tight">{trip.destination ? trip.destination.name : "Your trip"}</h2>
+        <p className="mt-1 text-sm text-white/70">{count} of 6 categories selected</p>
+        <div className="mt-4 grid grid-cols-6 gap-1.5">
+          {ORDER.map((cat) => {
+            const meta = CATEGORY_META[cat];
+            const active = Boolean(trip.selections[cat]);
+            return <div key={cat} title={meta.label} className={cn("flex h-10 items-center justify-center rounded-xl text-sm transition-colors", active ? "bg-white text-brand-700" : "bg-white/10 text-white/55")}>{meta.icon}</div>;
+          })}
+        </div>
       </div>
 
-      {/* Selections */}
-      <div className="max-h-[46vh] overflow-y-auto px-5 py-4 pt-8">
+      <div className="p-5">
         {count === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-8 text-center text-surface-400">
-            <Luggage className="h-6 w-6" />
-            <p className="text-xs">
-              Choose an option in any category and it'll show up here.
-            </p>
+          <div className="rounded-3xl border border-dashed border-surface-300 bg-surface-50 p-6 text-center text-surface-500">
+            <Luggage className="mx-auto h-7 w-7 text-brand-500" />
+            <p className="mt-3 text-sm font-semibold">Choose items from any category to start building your trip.</p>
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="max-h-[260px] space-y-3 overflow-y-auto pr-1">
             {ORDER.map((cat) => {
               const item = trip.selections[cat];
               if (!item) return null;
               const meta = CATEGORY_META[cat];
               return (
-                <li key={cat} className="flex items-start gap-2 border-b border-dashed border-surface-200 pb-3 last:border-b-0">
-                  <span className="mt-0.5 text-base">{meta.icon}</span>
+                <li key={cat} className="flex items-start gap-3 rounded-2xl border border-surface-100 bg-surface-50 p-3">
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">{meta.icon}</span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-surface-900">{item.option.title}</p>
-                    <p className="text-xs text-surface-400">{meta.label}</p>
+                    <p className="whitespace-normal break-words text-sm font-black leading-snug text-surface-950">{item.option.title}</p>
+                    <p className="mt-0.5 text-xs font-semibold text-surface-400">{meta.label}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <span className="text-sm font-bold tabular-nums text-surface-900">
-                      {formatPrice(item.option.price)}
-                    </span>
-                    <button
-                      onClick={() => deselectCategory(cat)}
-                      aria-label={`Remove ${item.option.title}`}
-                      className="text-surface-300 hover:text-rose-500"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
+                    <span className="text-sm font-black tabular-nums text-surface-950">{formatPrice(item.option.price)}</span>
+                    <button onClick={() => deselectCategory(cat)} aria-label={`Remove ${item.option.title}`} className="text-surface-300 hover:text-rose-500"><X className="h-3.5 w-3.5" /></button>
                   </div>
                 </li>
               );
             })}
           </ul>
         )}
-      </div>
 
-      {/* Total */}
-      <div className="border-t border-dashed border-surface-200 px-5 py-4">
-        <div className="flex items-baseline justify-between">
-          <span className="text-sm font-semibold text-surface-500">Trip total</span>
-          <span className="font-display text-2xl font-extrabold tabular-nums text-surface-900">
-            {formatPrice({ amount: total, currency: "USD", unit: "total", taxesIncluded: false })}
-          </span>
+        <div className="mt-5 rounded-3xl bg-gradient-to-br from-brand-50 via-white to-cyanpop-50 p-5">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm font-black text-surface-600">Estimated total</span>
+            <span className="font-display text-3xl font-black tabular-nums text-surface-950">{formatPrice({ amount: total, currency: "USD", unit: "total", taxesIncluded: false })}</span>
+          </div>
+          <p className="mt-2 flex items-center gap-2 text-xs font-semibold text-brand-700"><Sparkles className="h-3.5 w-3.5" /> AI budget insights coming next.</p>
+          <button disabled={count === 0} className={cn("mt-4 w-full rounded-2xl py-3 text-sm font-black transition-all", count > 0 ? "bg-gradient-to-r from-brand-600 to-purplepop-600 text-white shadow-brand hover:-translate-y-0.5" : "cursor-not-allowed bg-surface-200 text-surface-400")}>Review trip</button>
         </div>
-        <button
-          disabled={count === 0}
-          className={cn(
-            "mt-3 w-full rounded-xl py-3 text-sm font-bold transition-colors",
-            count > 0
-              ? "bg-brand-600 text-white hover:bg-brand-700"
-              : "cursor-not-allowed bg-surface-100 text-surface-400"
-          )}
-        >
-          Review trip
-        </button>
       </div>
     </aside>
   );

@@ -154,12 +154,12 @@ export default function DestinationSearch({
   return (
     <div
       data-destination-search
-      className={cn("relative w-full", compact ? "max-w-xl" : "max-w-2xl mx-auto")}
+      className={cn("relative w-full", compact ? "max-w-2xl" : "mx-auto max-w-5xl")}
     >
       <div
         className={cn(
-          "flex overflow-hidden rounded-2xl border border-surface-200 bg-white shadow-card transition-shadow duration-200 focus-within:shadow-glow focus-within:border-brand-400",
-          compact ? "rounded-xl" : "rounded-2xl"
+          "flex overflow-hidden border border-white/70 bg-white/95 shadow-card backdrop-blur-xl transition-all duration-200 focus-within:border-brand-300 focus-within:shadow-glow",
+          compact ? "rounded-2xl" : "rounded-[1.7rem]"
         )}
       >
         <div className="flex items-center pl-4 text-surface-400">
@@ -183,7 +183,7 @@ export default function DestinationSearch({
           aria-activedescendant={activeIndex >= 0 ? `dest-option-${activeIndex}` : undefined}
           role="combobox"
           className={cn(
-            "flex-1 bg-transparent py-4 pl-3 pr-2 text-surface-900 placeholder:text-surface-400 focus:outline-none",
+            "flex-1 bg-transparent py-4 pl-3 pr-2 font-semibold text-surface-900 placeholder:font-medium placeholder:text-surface-400 focus:outline-none",
             compact ? "text-base" : "text-lg"
           )}
         />
@@ -201,8 +201,8 @@ export default function DestinationSearch({
         <button
           onClick={handleSearch}
           className={cn(
-            "m-1.5 flex items-center gap-2 rounded-xl bg-brand-600 px-5 font-semibold text-white transition-colors hover:bg-brand-700 active:bg-brand-800",
-            compact ? "text-sm py-2" : "text-base py-3"
+            "m-1.5 flex items-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 via-cyanpop-500 to-purplepop-600 px-5 font-extrabold text-white shadow-brand transition-all hover:-translate-y-0.5 hover:shadow-card-hover active:translate-y-0",
+            compact ? "text-sm py-2.5" : "text-base py-3"
           )}
         >
           <Search className="h-4 w-4" />
@@ -214,7 +214,7 @@ export default function DestinationSearch({
         <ul
           ref={listRef}
           role="listbox"
-          className="absolute z-50 mt-2 w-full overflow-hidden rounded-2xl border border-surface-200 bg-white shadow-card-hover animate-slide-down"
+          className="absolute z-50 mt-3 w-full overflow-hidden rounded-3xl border border-surface-200 bg-white/95 shadow-card-hover backdrop-blur-xl animate-slide-down"
         >
           {results.map((dest, i) => (
             <li
@@ -230,7 +230,7 @@ export default function DestinationSearch({
                 i > 0 && "border-t border-surface-100"
               )}
             >
-              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600">
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-100 to-cyanpop-100 text-brand-700">
                 <MapPin className="h-4 w-4" />
               </div>
               <div>

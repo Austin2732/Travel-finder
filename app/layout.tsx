@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Syne, JetBrains_Mono } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import Header from "@/components/Header";
 import "./globals.css";
@@ -10,10 +10,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const syne = Syne({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["600", "700", "800"],
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -24,16 +23,16 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fareboard — Build your trip, one best-value pick at a time",
+  title: "Fareboard — AI travel planning that finds the best value",
   description:
-    "Search a destination and assemble flights, hotels, cars, food, and activities into one trip — with the best-value option called out in every category.",
+    "Search one destination and compare flights, hotels, cars, food, activities, and extras in one premium trip planner.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable} ${mono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jakarta.variable} ${mono.variable}`}>
       <body className="flex min-h-screen flex-col font-sans">
         <Header />
         <main className="flex-1">{children}</main>
@@ -41,7 +40,7 @@ export default function RootLayout({
         <Toaster
           position="bottom-center"
           toastOptions={{
-            className: "!rounded-xl !bg-surface-900 !text-white !text-sm",
+            className: "!rounded-2xl !bg-surface-950 !text-white !text-sm !shadow-brand",
           }}
         />
       </body>
@@ -52,9 +51,23 @@ export default function RootLayout({
 function Footer() {
   return (
     <footer className="border-t border-surface-200 bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-xs text-surface-400 sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Fareboard. Prices shown are illustrative, not live bookings.</p>
-        <p className="font-mono">MCO · LAS · JFK · MIA · CUN · CDG</p>
+      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-10 text-sm text-surface-500 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div>
+          <div className="font-display text-lg font-extrabold text-surface-950">Fareboard</div>
+          <p className="mt-2 max-w-xs leading-relaxed">Plan smarter. Compare flights, stays, food, and experiences in one place.</p>
+        </div>
+        <div>
+          <p className="font-semibold text-surface-900">Company</p>
+          <p className="mt-2">About · Careers · Press</p>
+        </div>
+        <div>
+          <p className="font-semibold text-surface-900">Support</p>
+          <p className="mt-2">Help Center · Contact · Privacy</p>
+        </div>
+        <div>
+          <p className="font-semibold text-surface-900">Status</p>
+          <p className="mt-2 font-mono text-xs text-emerald-600">PLACES · MAPS · TRIP BUILDER ONLINE</p>
+        </div>
       </div>
     </footer>
   );

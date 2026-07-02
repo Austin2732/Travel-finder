@@ -12,13 +12,16 @@ html {
 
 body {
   @apply bg-surface-50 text-surface-900 antialiased;
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(34, 211, 238, 0.14), transparent 28%),
+    radial-gradient(circle at 95% 5%, rgba(168, 85, 247, 0.14), transparent 26%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #eef6ff 100%);
 }
 
-/* Visible keyboard focus everywhere */
 :focus-visible {
-  outline: 2px solid theme("colors.brand.500");
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 3px solid rgba(37, 99, 235, 0.45);
+  outline-offset: 3px;
+  border-radius: 10px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -32,7 +35,6 @@ body {
   }
 }
 
-/* ── Signature element: ticket-stub perforation ──────────────────────────── */
 .ticket-perforation {
   position: relative;
 }
@@ -59,29 +61,24 @@ body {
   z-index: 10;
 }
 
-.ticket-notch-left {
-  left: -10px;
-}
+.ticket-notch-left { left: -10px; }
+.ticket-notch-right { right: -10px; }
 
-.ticket-notch-right {
-  right: -10px;
-}
-
-/* Split-flap style digits for the departures hero */
 .flap {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
 }
 
-/* Scrollbar polish */
+.text-balance {
+  text-wrap: balance;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: theme("colors.surface.300");
+  background: linear-gradient(180deg, #60a5fa, #a855f7);
   border-radius: 9999px;
 }
